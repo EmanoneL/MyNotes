@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load notes_tags %}
+{% block content %}
+<h1>{{title}}</h1>
+<ul id="leftchapters">
+    {% if cat_selected == 0 or cat_selected is None %}
+    <li class="selected">Все категории</li>
+    {% else %}
+    <li><a href="{% url 'home' %}">Все категории</a></li>
+    {% endif %}
+    {% show_categories cat_selected %}
+</ul>
+<ul>
+    {% for p in posts %}
+    {% if p.is_published and p.category == cat_selected %}
+    <li>
+        <h2>{{p.title}}</h2>
+        <p>{{p.content}}</p>
+        <p><a href="{% url 'post' p.id %}">Читать пост</a></p>
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}
