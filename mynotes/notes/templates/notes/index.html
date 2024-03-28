@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>{{title}}</h1>
-<ul>
+<ul class="list-articles">
     {% for p in posts %}
-    {% if p.is_published %}
     <li>
         <h2>{{p.title}}</h2>
-        <p>{{p.content}}</p>
-        <p><a href="{% url 'post' p.id %}">Open note</a></p>
-        {% if not forloop.last %}
-        <hr>
-        {% endif %}
-    </li>
-    {% endif %}
-    {% endfor %}
+        {% autoescape off %}
+        {{p.content|linebreaks|truncatewords:50}}
+        {% endautoescape %}
+        <div class="clear"></div>
+        <p class="link-readpost">
+            <a href="{{ p.get_absolute_url }}">
+                Читать пост
+            </a>
+        </p>
+            </li>
+        {% endfor %}
 </ul>
 {% endblock %}

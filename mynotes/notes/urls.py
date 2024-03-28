@@ -9,11 +9,13 @@ urlpatterns = [
     path('archive/<year4:year>/', views.archive, name='archive'),
 
     path('find/', views.find, name='find'),
-    path('add/', views.add_notes, name='add'),
     path('login/', views.login, name='login'),
     path('about/', views.about, name='about'),
-    path('post/<int:post_id>/', views.show_post,
+    path('post/<slug:post_slug>/', views.show_post,
          name='post'),
+    path('create/', views.create, name='create'),
+    path('edit/<slug:post_slug>/', views.edit, name='edit'),
+    path('delete/<slug:post_slug>/', views.delete, name='delete'),
 
 
 ]

@@ -1,45 +1,20 @@
+from datetime import datetime
+
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.shortcuts import render
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.template.defaultfilters import slugify
+from notes.models import Notes
 
 menu = [{'title': "Поиск заметки", 'url_name': 'find'},
         {'title': "Войти", 'url_name': 'login'},
         {'title': "Новая заметка", 'url_name': 'add'},
         {'title': "О сайте", 'url_name': 'about'},
         ]
-
-notes = [
-    {'id': 1,
-     'title': '10.01.2024',
-     'content': '1. Проснуться <br> 2. Улыбнуться',
-     'is_published': True,
-     'category': 1},
-    {'id': 2,
-     'title': '11.01.2023',
-     'content': '1. Лечь спать <br> 2. Расстроиться',
-     'is_published': True,
-     'category': 1},
-    {'id': 3,
-     'title': 'Продукты',
-     'content': '1. Молоко <br> 2. Сыр <br> 3. Яйца',
-     'is_published': True,
-     'category': 2},
-    {'id': 4,
-     'title': 'Дела на завтра',
-     'content': '1. Сходить к врачу <br> 2. Приготовить кушать <br> 3. Прирать комнату',
-     'is_published': True,
-     'category': 2},
-    {'id': 5,
-     'title': 'Адрес',
-     'content': 'ул.Блюхера 32/1',
-     'is_published': True,
-     'category': 3},
-]
 
 cats_db = [
     {'id': 1, 'name': 'Расписание'},
@@ -49,10 +24,11 @@ cats_db = [
 
 
 def index(request):
+    posts = Notes.private.all().order_by('-time_update')
     data = {
         'title': 'Главная страница',
         'menu': menu,
-        'posts': notes,
+        'posts': posts,
         'cat_selected': 0,  # не обязательная строчка
     }
     return render(request, 'notes/index.html',
@@ -63,25 +39,36 @@ def categories(request, cat_id):
     data = {
         'title': 'Фильтр заметок',
         'menu': menu,
-        'posts': notes,
+        'posts': Notes.private.all(),
         'cat_selected': cat_id,
     }
     return render(request, 'notes/cats.html',
                   context=data)
 
+
 def archive(request, year):
-    if year > 2024:
-        # raise Http404()
-        # return redirect('home', permanent=True)
-        return HttpResponseRedirect('/')
-    return HttpResponse(f"<h1>Архив по годам</h1><p>{year}</p>")
+    data = {
+        'title': 'Архив до года ' + str(year),
+        'menu': menu,
+        'posts': Notes.private.all().filter(time_create__lte=datetime(year, 1, 1)),
+    }
+    return render(request, 'notes/index.html',
+                  context=data)
 
-def show_post(request, post_id):
-    return HttpResponse(f"Отображение заметки с id = {post_id}")
 
-def add_notes(request):
-    return render(request, 'notes/add.html',
-                  {'title': 'Новая заметка', 'menu': menu})
+
+def show_post(request, post_slug):
+    post = get_object_or_404(Notes, slug=post_slug)
+    data = {
+        'title': post.title,
+        'menu': menu,
+        'post': post,
+        'cat_selected': 1,
+    }
+    return render(request, 'notes/post.html',
+                  context=data)
+
+
 
 def about(request):
     return render(request, 'notes/about.html',
@@ -92,7 +79,7 @@ def find(request):
     data = {
         'title': 'Найти заметку',
         'menu': menu,
-        'posts': notes,
+        'posts': Notes.objects.all(),
         'cat_selected': 0,  # не обязательная строчка
     }
     return render(request, 'notes/find.html',
@@ -104,8 +91,40 @@ def login(request):
                   {'title': 'Вход', 'menu': menu})
 
 
+def create(request):
+    if request.method == "POST":
+        note = Notes()
+        note.title = request.POST.get("title")
+        note.content = request.POST.get("content")
+        note.save()
+        return HttpResponseRedirect("/")
+    else:
+        return render(request, "notes/create.html")
 
 
+# изменение данных в бд
+def edit(request, post_slug):
+    try:
+        note = Notes.objects.get(slug=post_slug)
+        if request.method == "POST":
+            note.title = request.POST.get("title")
+            note.content = request.POST.get("content")
+            note.save()
+            return HttpResponseRedirect("/")
+        else:
+            return render(request, "notes/edit.html", {"post": note})
+    except Notes.DoesNotExist:
+        return HttpResponseNotFound("<h2>Note not found</h2>")
+
+
+# удаление данных из бд
+def delete(request, post_slug):
+    try:
+        note = Notes.objects.get(slug=post_slug)
+        note.delete()
+        return HttpResponseRedirect("/")
+    except Notes.DoesNotExist:
+        return HttpResponseNotFound("<h2>Note not found</h2>")
 
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
