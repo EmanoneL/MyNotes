@@ -24,5 +24,5 @@ handler404 = page_not_found
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('notes/', include('notes.urls')),
+    path('', include('notes.urls')),
 ]

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{post.title}}</h1>
+{% if post.photo %}
+<p ><img class="img-article-left"
+src="{{post.photo.url}}"></p>
+{% endif %}
+<a href="/edit/{{post.slug}}">Изменить</a> | <a href=/delete/{{post.slug}}>Удалить</a>
+
+{{post.content|linebreaks}}
+{% endblock %}

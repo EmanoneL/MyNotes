@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+        <p>
+            <label>Введите заголовок</label><br>
+            <input type="text" name="title" value="{{post.title}}" />
+        </p>
+        <p>
+            <label>Введите текст</label><br>
+            <textarea type="text" name="content" />{{post.content}}</textarea>
+        </p>
+
+        <label>
+        <input type="checkbox" name="public" {%if post.is_published%}checked{%endif%}/>
+            Сделать пост публичным
+        </label>
+
+        <input type="submit" value="Сохранить" >
+    </form>
+
+{% endblock %}

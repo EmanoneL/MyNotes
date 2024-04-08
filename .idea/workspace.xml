@@ -4,16 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="769855b7-4862-4248-86eb-7dd831a7cc21" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/MyNotes.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mynotes/notes/converters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mynotes/notes/urls.py" afterDir="false" />
+    <list default="true" id="769855b7-4862-4248-86eb-7dd831a7cc21" name="Changes" comment="Lab2 task">
+      <change afterPath="$PROJECT_DIR$/mynotes/notes/templates/notes/post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/mynotes/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/mynotes/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/mynotes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/mynotes/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/templates/includes/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/templates/includes/nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/templates/notes/add.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/templates/notes/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/templates/notes/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +33,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -46,7 +51,8 @@
     &quot;Python.mynotes.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ekaterina/PycharmProjects/MyNotes&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ekaterina/PycharmProjects/MyNotes&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -99,6 +105,33 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Lab2 task" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lab2 task" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -106,6 +139,11 @@
           <url>file://$PROJECT_DIR$/venv/Lib/site-packages/django/template/loader.py</url>
           <line>51</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mynotes/notes/models.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
