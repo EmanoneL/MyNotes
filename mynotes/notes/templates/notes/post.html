@@ -1,11 +1,39 @@
 {% extends 'base.html' %}
+
+
+
 {% block content %}
 <h1>{{post.title}}</h1>
+
+
+{% block breadcrumbs %}
+<!-- Теги -->
+{% with post.tags.all as tags %}
+{% if tags %}
+<ul class="tags-list">
+ <li>Теги:</li>
+ {% for t in tags %}
+ <li><a
+href="{{t.get_absolute_url}}">{{t.tag}}</a></li>
+ {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+
+
+
+
+
 {% if post.photo %}
 <p ><img class="img-article-left"
 src="{{post.photo.url}}"></p>
 {% endif %}
-<a href="/edit/{{post.slug}}">Изменить</a> | <a href=/delete/{{post.slug}}>Удалить</a>
-
 {{post.content|linebreaks}}
+Примечание<br>
+{{ post.foot_note.content}}
+<br>
+<a href="/edit/{{post.slug}}">Изменить</a><br>
+<a href=/delete/{{post.slug}}>Удалить</a>
 {% endblock %}

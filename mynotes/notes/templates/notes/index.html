@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>{{title}}</h1>
 <ul class="list-articles">
     {% for p in posts %}
     <li>
         <h2>{{p.title}}</h2>
+        <li><div class="article-panel">
+         <p class="first">Категория: {{p.cat.name}}</p>
+         <p class="last">Дата: {{p.time_update|date:"dm-Y H:i:s"}}</p>
+        </div>
         {% autoescape off %}
         {{p.content|linebreaks|truncatewords:50}}
         {% endautoescape %}

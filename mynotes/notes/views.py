@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.template.defaultfilters import slugify
-from notes.models import Notes
+from notes.models import Notes, Category, TagPost
 
 menu = [{'title': "Поиск заметки", 'url_name': 'find'},
         {'title': "Войти", 'url_name': 'login'},
@@ -29,21 +29,35 @@ def index(request):
         'title': 'Главная страница',
         'menu': menu,
         'posts': posts,
-        'cat_selected': 0,  # не обязательная строчка
+        'cat_selected': 0,
     }
     return render(request, 'notes/index.html',
                   context=data)
 
 
-def categories(request, cat_id):
+def categories(request, cat_slug):
+    category = get_object_or_404(Category, slug=cat_slug)
+    posts = Notes.private.filter(cat_id=category.pk)
     data = {
-        'title': 'Фильтр заметок',
+        'title': f'Категория: {category.name}',
         'menu': menu,
-        'posts': Notes.private.all(),
-        'cat_selected': cat_id,
+        'posts': posts,
+        'cat_selected': category.pk,
     }
     return render(request, 'notes/cats.html',
                   context=data)
+
+def show_tag_postlist(request, tag_slug):
+    tag = get_object_or_404(TagPost, slug=tag_slug)
+    posts = tag.tags.filter(is_published=Notes.Status.PRIVATE)
+    data = {
+    'title': f'Тег: {tag.tag}',
+    'menu': menu,
+    'posts': posts,
+    'cat_selected': None,
+    }
+    return render(request, 'notes/index.html',
+    context=data)
 
 
 def archive(request, year):
