@@ -19,6 +19,7 @@ from django.urls import path, include
 
 from mynotes import settings
 from notes.views import page_not_found
+from django.conf.urls.static import static
 
 
 handler404 = page_not_found
@@ -36,4 +37,4 @@ if settings.DEBUG:
                       path('__debug__/', include(debug_toolbar.urls)),
                   ] + urlpatterns
 
-    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

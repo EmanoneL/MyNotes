@@ -5,6 +5,11 @@
 <ul class="list-articles">
     {% for p in posts %}
     <li>
+        {% if p.picture %}
+         <p ><img class="img-article-left
+        thumb" src="{{p.picture.url}}"></p>
+        {% endif %}
+
         <h2>{{p.title}}</h2>
         <li><div class="article-panel">
          <p class="first">Категория: {{p.cat.name}}</p>

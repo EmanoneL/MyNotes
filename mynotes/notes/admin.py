@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 
 from .models import Notes, TagPost, FootNote, Category
 
@@ -49,13 +50,13 @@ class IsPublishedFilter(admin.SimpleListFilter):
             return queryset.filter(is_published=Notes.Status.PUBLISHED)
 @admin.register(Notes)
 class NotesAdmin(admin.ModelAdmin):
-    fields = ['title', 'content', 'slug', 'foot_note','cat','tags']
+    fields = ['title', 'content', 'slug', 'foot_note','cat','tags','picture']
     filter_horizontal = ['tags']
     prepopulated_fields = {"slug": ("title",)}
 
 
     list_display = ('title', 'time_create',
-                    'is_published', 'cat', 'brief_info')
+                    'is_published', 'cat','post_picture')
     list_display_links = ('title',)
     ordering = ['time_create', 'title']
     list_editable = ('is_published',)
@@ -74,8 +75,11 @@ class NotesAdmin(admin.ModelAdmin):
         self.message_user(request, f"{count} записи(ей)сняты с публикации!")
 
     @admin.display(description="Краткое описание")
-    def brief_info(self, note: Notes):
-        return f"Содержит {len(note.content)} символов."
+    def post_picture(self, note: Notes):
+        if note.picture:
+            return mark_safe(f"<img src='{note.picture.url}'width=50>")
+        return "Без фото"
+
 
     @admin.display(description="Прошло времени после публикации последней заметки")
     def brief_info(self, note: Notes):

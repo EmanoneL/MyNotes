@@ -1,4 +1,5 @@
 from datetime import datetime
+import uuid
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,7 +9,9 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.template.defaultfilters import slugify
-from notes.models import Notes, Category, TagPost
+
+from notes.forms import AddNoteForm, UploadFileForm
+from notes.models import Notes, Category, TagPost, UploadFiles
 
 menu = [{'title': "Поиск заметки", 'url_name': 'find'},
         {'title': "Войти", 'url_name': 'login'},
@@ -83,10 +86,28 @@ def show_post(request, post_slug):
                   context=data)
 
 
+def handle_uploaded_file(f):
+    name = f.name
+    ext = ''
+    if '.' in name:
+        ext = name[name.rindex('.'):]
+        name = name[:name.rindex('.')]
+    suffix = str(uuid.uuid4())
+
+    with open(f"uploads/{name}_{suffix}{ext}", "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
 
 def about(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            fp = UploadFiles(file=form.cleaned_data['file'])
+            fp.save()
+    else:
+        form = UploadFileForm()
     return render(request, 'notes/about.html',
-                  {'title': 'О сайте', 'menu': menu})
+                  {'title': 'О сайте', 'menu': menu, 'form':form})
 
 
 def find(request):
@@ -107,13 +128,21 @@ def login(request):
 
 def create(request):
     if request.method == "POST":
-        note = Notes()
-        note.title = request.POST.get("title")
-        note.content = request.POST.get("content")
-        note.save()
-        return HttpResponseRedirect("/")
+        # note = Notes()
+        # note.title = request.POST.get("title")
+        # note.content = request.POST.get("content")
+        # note.save()
+        form = AddNoteForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
     else:
-        return render(request, "notes/create.html")
+        form = AddNoteForm()
+    return render(request, "notes/create.html",
+                      {'title':'Добавление статьи',
+                            'form':form
+                       }
+        )
 
 
 # изменение данных в бд

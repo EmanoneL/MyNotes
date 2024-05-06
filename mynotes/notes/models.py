@@ -54,8 +54,9 @@ class Notes(models.Model):
     is_published = models.BooleanField(choices=tuple(map(lambda x:(bool(x[0]), x[1]), Status.choices)),default=Status.PRIVATE, verbose_name="Статус")
     tags = models.ManyToManyField('TagPost', blank=True, related_name='tags', verbose_name="Тэги")
     foot_note = models.OneToOneField('FootNote', on_delete=models.SET_NULL, null=True, blank=True, related_name='note', verbose_name="Примечание")
-
-
+    picture = models.ImageField(upload_to="pictures/%Y/%m/%d/",
+                              default=None, blank=True, null=True,
+                              verbose_name="Изображение")
 
 
 class Category(models.Model):
@@ -106,3 +107,7 @@ class FootNote(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class UploadFiles(models.Model):
+    file = models.FileField(upload_to='uploads_model')

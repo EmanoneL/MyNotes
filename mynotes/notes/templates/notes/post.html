@@ -4,10 +4,12 @@
 
 {% block content %}
 <h1>{{post.title}}</h1>
-
-
 {% block breadcrumbs %}
-<!-- Теги -->
+{% if post.picture.url %}
+<img class="img-article-left"
+src="{{post.picture.url}}">
+{% endif %}
+
 {% with post.tags.all as tags %}
 {% if tags %}
 <ul class="tags-list">
@@ -21,11 +23,6 @@ href="{{t.get_absolute_url}}">{{t.tag}}</a></li>
 {% endwith %}
 {% endblock %}
 
-
-{% if post.photo %}
-<p ><img class="img-article-left"
-src="{{post.photo.url}}"></p>
-{% endif %}
 {{post.content|linebreaks}}
 Примечание<br>
 {{ post.foot_note.content}}
