@@ -16,13 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+from mynotes import settings
 from notes.views import page_not_found
 
 
 handler404 = page_not_found
-
+admin.site.site_header = "Панель администрирования"
+admin.site.index_title = "Заметки"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('notes.urls')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+                      path('__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns
+
+    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
