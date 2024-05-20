@@ -4,19 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="769855b7-4862-4248-86eb-7dd831a7cc21" name="Changes" comment="Lab5 task">
-      <change afterPath="$PROJECT_DIR$/mynotes/notes/forms.py" afterDir="false" />
+    <list default="true" id="769855b7-4862-4248-86eb-7dd831a7cc21" name="Changes" comment="Lab6 task">
+      <change afterPath="$PROJECT_DIR$/mynotes/notes/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mynotes/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mynotes/mynotes/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/mynotes/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mynotes/mynotes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/mynotes/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mynotes/notes/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mynotes/notes/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/static/notes/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/static/notes/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mynotes/notes/templates/notes/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/templates/notes/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mynotes/notes/templates/notes/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/templates/notes/create.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mynotes/notes/templates/notes/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/templates/notes/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mynotes/notes/templates/notes/post.html" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/templates/notes/post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/notes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mynotes/notes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/notes/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mynotes/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/mynotes/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +154,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714992462650</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Lab6 task">
+      <option name="closed" value="true" />
+      <created>1715009804542</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715009804542</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Lab6 task">
+      <option name="closed" value="true" />
+      <created>1715009816046</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1715009816046</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -186,7 +200,8 @@
     <MESSAGE value="Lab2 task" />
     <MESSAGE value="Lab4 task" />
     <MESSAGE value="Lab5 task" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lab5 task" />
+    <MESSAGE value="Lab6 task" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lab6 task" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -205,6 +220,11 @@
           <url>file://$PROJECT_DIR$/mynotes/notes/admin.py</url>
           <line>29</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mynotes/notes/utils.py</url>
+          <line>2</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

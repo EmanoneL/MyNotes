@@ -1,5 +1,5 @@
 html, body {
-	font-family: 'Roboto';
+	font-family: 'Arial';
 	margin: 0;
 	padding: 0;
 	height: 100%;
@@ -408,6 +408,205 @@ ul.lang-list li a:hover {color: #fdc073;}
     font-size: 16px;
 }
 
-.h3 {
-    text-decoration: underline
+
+
+
+/* Стили для навигационного меню */
+nav {
+    background-color: #343a40; /* Темный фон */
+    padding: 10px 0; /* Внутренние отступы сверху и снизу */
+    text-align: center; /* Центрирование текста */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для эффекта объема */
 }
+
+nav a {
+    color: #ffffff; /* Белый цвет текста */
+    text-decoration: none; /* Удаление подчеркивания */
+    margin: 0 15px; /* Отступы между ссылками */
+    font-size: 16px; /* Размер текста */
+    transition: color 0.3s, background-color 0.3s; /* Плавный переход для цвета и фона */
+    padding: 5px 10px; /* Внутренние отступы для удобства */
+    border-radius: 4px; /* Скругленные углы */
+}
+
+nav a:hover {
+    color: #343a40; /* Темный цвет текста при наведении */
+    background-color: #ffffff; /* Белый фон при наведении */
+}
+
+nav a.active {
+    color: #17a2b8; /* Цвет активной ссылки */
+    background-color: #ffffff; /* Фон активной ссылки */
+    font-weight: bold; /* Полужирный шрифт для активной ссылки */
+}
+
+
+/* Стили для навигации */
+nav.list-pages {
+    display: flex;
+    justify-content: center; /* Центрирование элементов по горизонтали */
+    align-items: center; /* Центрирование элементов по вертикали */
+    padding: 10px 0;
+    background-color: #343a40;
+}
+
+nav.list-pages ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0 10px;
+    align-items: center; /* Центрирование элементов по вертикали внутри ul */
+}
+
+nav.list-pages li {
+    margin: 0 5px;
+}
+
+nav.list-pages li a, nav.list-pages .page-num-selected {
+    text-decoration: none;
+    color: #a3acb4;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    display: inline-block; /* Обеспечение одинакового отображения для ссылок и выделенного элемента */
+}
+
+nav.list-pages li a:hover {
+    background-color: #a3acb0;
+    color: #ffffff;
+}
+
+nav.list-pages .page-num-selected {
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #a3acb4;
+}
+nav.list-pages .page-num {
+    list-style: none;
+}
+/* Стили для контейнера категорий */
+.left-chapters {
+    background-color: #f8f9fa; /* Светлый фон для контейнера */
+    padding: 20px; /* Внутренние отступы */
+    border-radius: 8px; /* Сглаженные углы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень для придания объема */
+    max-width: 300px; /* Максимальная ширина контейнера */
+}
+
+/* Стили для списка категорий */
+#leftchapters {
+    list-style: none; /* Убираем стандартные маркеры списка */
+    padding: 0; /* Убираем внутренние отступы */
+    margin: 0; /* Убираем внешние отступы */
+    max-width: 300px;
+}
+
+/* Стили для элементов списка */
+#leftchapters li {
+    margin-bottom: 10px; /* Отступ между элементами списка */
+}
+
+#leftchapters li a, #leftchapters li.selected {
+    display: block; /* Блочное отображение для всего элемента */
+    padding: 10px 15px; /* Внутренние отступы */
+    text-decoration: none; /* Убираем подчеркивание текста */
+    color: #343a40; /* Основной цвет текста */
+    border-radius: 4px; /* Сглаженные углы */
+    transition: background-color 0.3s, color 0.3s; /* Плавный переход для эффектов при наведении */
+}
+
+/* Стили для активного элемента списка */
+#leftchapters li.selected {
+    background-color: #566677; /* Основной цвет фона для выбранного элемента */
+    color: #ffffff; /* Белый цвет текста для выбранного элемента */
+    font-weight: bold; /* Жирный текст */
+}
+
+/* Стили для ссылок */
+#leftchapters li a:hover {
+    background-color: #566677; /* Основной цвет фона при наведении */
+    color: #ffffff; /* Белый цвет текста при наведении */
+}
+
+/* Стили для заголовка страницы */
+h1 {
+    color: #343a40; /* Основной цвет */
+    font-size: 2em; /* Размер шрифта */
+    margin-bottom: 20px; /* Отступ снизу */
+    text-align: center; /* Центрирование заголовка */
+}
+
+/* Стили для списка статей */
+.list-articles {
+    list-style: none; /* Убираем стандартные маркеры списка */
+    padding: 0; /* Убираем внутренние отступы */
+    margin: 0; /* Убираем внешние отступы */
+}
+
+/* Стили для элементов списка */
+.list-articles li {
+    background-color: #f8f9fa; /* Светлый фон для каждого поста */
+    margin-bottom: 20px; /* Отступ снизу */
+    padding: 20px; /* Внутренние отступы */
+    border-radius: 8px; /* Сглаженные углы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень для придания объема */
+    overflow: hidden; /* Обрезка переполнения */
+}
+
+/* Стили для изображения */
+.img-article-left {
+    float: left; /* Выравнивание изображения слева */
+    margin-right: 15px; /* Отступ справа */
+    max-width: 150px; /* Максимальная ширина изображения */
+    height: auto; /* Автоматическая высота для сохранения пропорций */
+    border-radius: 4px; /* Сглаженные углы */
+}
+
+/* Стили для заголовка поста */
+.list-articles h2 {
+    color: #343a40; /* Основной цвет */
+    font-size: 1.5em; /* Размер шрифта */
+    margin-top: 0; /* Убираем верхний отступ */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+/* Стили для панели информации о статье */
+.article-panel {
+    display: flex; /* Включаем Flexbox для контейнера */
+    justify-content: space-between; /* Равномерное распределение элементов */
+    margin-bottom: 10px; /* Отступ снизу */
+
+}
+
+/* Стили для первой строки панели */
+.article-panel .first {
+    color: #6c757d; /* Серый цвет текста */
+}
+
+/* Стили для последней строки панели */
+.article-panel .last {
+    color: #6c757d; /* Серый цвет текста */
+}
+
+/* Стили для ссылки "Читать пост" */
+.link-readpost a {
+    display: inline-block; /* Инлайн-блочный элемент */
+    background-color: #343a40; /* Основной цвет фона */
+    color: #ffffff; /* Белый цвет текста */
+    padding: 10px 15px; /* Внутренние отступы */
+    text-decoration: none; /* Убираем подчеркивание текста */
+    border-radius: 4px; /* Сглаженные углы */
+    transition: background-color 0.3s, color 0.3s; /* Плавный переход для эффектов при наведении */
+}
+
+/* Стили для ссылки при наведении */
+.link-readpost a:hover {
+    background-color: #495057; /* Темный цвет фона при наведении */
+    color: #ffffff; /* Белый цвет текста при наведении */
+}
+
+/* Стили для очистки флоатов */
+.clear {
+    clear: both; /* Очищаем обтекание */
+}
+

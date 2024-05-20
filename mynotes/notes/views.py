@@ -1,6 +1,7 @@
 from datetime import datetime
 import uuid
 
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -9,9 +10,13 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.template.defaultfilters import slugify
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
 
 from notes.forms import AddNoteForm, UploadFileForm
 from notes.models import Notes, Category, TagPost, UploadFiles
+from notes.utils import DataMixin
 
 menu = [{'title': "Поиск заметки", 'url_name': 'find'},
         {'title': "Войти", 'url_name': 'login'},
@@ -19,48 +24,117 @@ menu = [{'title': "Поиск заметки", 'url_name': 'find'},
         {'title': "О сайте", 'url_name': 'about'},
         ]
 
-cats_db = [
-    {'id': 1, 'name': 'Расписание'},
-    {'id': 2, 'name': 'Списки'},
-    {'id': 3, 'name': 'Прочие заметки'},
-]
 
 
-def index(request):
-    posts = Notes.private.all().order_by('-time_update')
-    data = {
-        'title': 'Главная страница',
+# class Create(View):
+#     def get(self, request):
+#         form = AddNoteForm()
+#         return render(request, "notes/create.html",
+#                       {'title': 'Добавление статьи',
+#                        'form': form
+#                        }
+#                       )
+#
+#     def post(self, request):
+#         form = AddNoteForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('home')
+# class Create(FormView):
+#     form_class = AddNoteForm
+#     template_name = 'notes/create.html'
+#     success_url = reverse_lazy('home')
+#     extra_context = {
+#         'menu': menu,
+#         'title': 'Добавление статьи',
+#     }
+#
+#     def form_valid(self, form):
+#         form.save()
+#         return super().form_valid(form)
+
+class Create(DataMixin, CreateView):
+    form_class = AddNoteForm
+    template_name = 'notes/create.html'
+    title_page = 'Добавление статьи'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class NotesHome(DataMixin, ListView):
+    template_name = 'notes/index.html'
+    context_object_name = 'posts'
+
+
+    def get_queryset(self):
+        return Notes.private.all().select_related('cat').order_by('-time_update')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        return self.get_mixin_context(super().get_context_data(**kwargs), title='Главная страница', cat_selected=0)
+
+
+class NotesCategory(DataMixin,ListView):
+    template_name = 'notes/index.html'
+    context_object_name = 'posts'
+    allow_empty = False
+
+    def get_queryset(self):
+        return Notes.private.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cat = context['posts'][0].cat
+        return self.get_mixin_context(context, title='Категория-' + cat.name, cat_selected=cat.id, )
+
+
+class TagPostList(DataMixin,ListView):
+    template_name = 'notes/index.html'
+    context_object_name = 'posts'
+    allow_empty = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag = TagPost.objects.get(slug=self.kwargs['tag_slug'])
+        return self.get_mixin_context(context, title='Тег' + tag.tag)
+
+    def get_queryset(self):
+        return Notes.private.filter(tags__slug=self.kwargs['tag_slug']).select_related('cat')
+
+
+class ShowPost(DataMixin, DetailView):
+    model = Notes
+    template_name = 'notes/post.html'
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return self.get_mixin_context(context, title=context['post'])
+    def get_object(self, queryset=None):
+        return get_object_or_404(Notes.private,
+                                 slug=self.kwargs[self.slug_url_kwarg])
+
+
+class UpdatePage(DataMixin,UpdateView):
+    model = Notes
+    fields = ['title', 'content', 'picture', 'is_published', 'cat']
+    template_name = 'notes/create.html'
+    success_url = reverse_lazy('home')
+    title_page = 'Редактирование заметки'
+
+
+
+class DeleteNote(DataMixin, DeleteView):
+    model = Notes
+    template_name = 'notes/delete.html'
+    success_url = reverse_lazy('home')
+    title_page = 'Удаление заметки'
+    extra_context = {
         'menu': menu,
-        'posts': posts,
-        'cat_selected': 0,
+        'title': 'Удаление статьи',
     }
-    return render(request, 'notes/index.html',
-                  context=data)
-
-
-def categories(request, cat_slug):
-    category = get_object_or_404(Category, slug=cat_slug)
-    posts = Notes.private.filter(cat_id=category.pk)
-    data = {
-        'title': f'Категория: {category.name}',
-        'menu': menu,
-        'posts': posts,
-        'cat_selected': category.pk,
-    }
-    return render(request, 'notes/cats.html',
-                  context=data)
-
-def show_tag_postlist(request, tag_slug):
-    tag = get_object_or_404(TagPost, slug=tag_slug)
-    posts = tag.tags.filter(is_published=Notes.Status.PRIVATE)
-    data = {
-    'title': f'Тег: {tag.tag}',
-    'menu': menu,
-    'posts': posts,
-    'cat_selected': None,
-    }
-    return render(request, 'notes/index.html',
-    context=data)
 
 
 def archive(request, year):
@@ -70,19 +144,6 @@ def archive(request, year):
         'posts': Notes.private.all().filter(time_create__lte=datetime(year, 1, 1)),
     }
     return render(request, 'notes/index.html',
-                  context=data)
-
-
-
-def show_post(request, post_slug):
-    post = get_object_or_404(Notes, slug=post_slug)
-    data = {
-        'title': post.title,
-        'menu': menu,
-        'post': post,
-        'cat_selected': 1,
-    }
-    return render(request, 'notes/post.html',
                   context=data)
 
 
@@ -98,16 +159,15 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
 
+
 def about(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            fp = UploadFiles(file=form.cleaned_data['file'])
-            fp.save()
-    else:
-        form = UploadFileForm()
-    return render(request, 'notes/about.html',
-                  {'title': 'О сайте', 'menu': menu, 'form':form})
+    contact_list = Notes.private.all()
+    paginator = Paginator(contact_list, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'notes/about.html', {'page_obj':
+                                                    page_obj, 'title': 'О сайте'})
 
 
 def find(request):
@@ -127,47 +187,8 @@ def login(request):
 
 
 def create(request):
-    if request.method == "POST":
-        # note = Notes()
-        # note.title = request.POST.get("title")
-        # note.content = request.POST.get("content")
-        # note.save()
-        form = AddNoteForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = AddNoteForm()
-    return render(request, "notes/create.html",
-                      {'title':'Добавление статьи',
-                            'form':form
-                       }
-        )
+    pass
 
-
-# изменение данных в бд
-def edit(request, post_slug):
-    try:
-        note = Notes.objects.get(slug=post_slug)
-        if request.method == "POST":
-            note.title = request.POST.get("title")
-            note.content = request.POST.get("content")
-            note.save()
-            return HttpResponseRedirect("/")
-        else:
-            return render(request, "notes/edit.html", {"post": note})
-    except Notes.DoesNotExist:
-        return HttpResponseNotFound("<h2>Note not found</h2>")
-
-
-# удаление данных из бд
-def delete(request, post_slug):
-    try:
-        note = Notes.objects.get(slug=post_slug)
-        note.delete()
-        return HttpResponseRedirect("/")
-    except Notes.DoesNotExist:
-        return HttpResponseNotFound("<h2>Note not found</h2>")
 
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
