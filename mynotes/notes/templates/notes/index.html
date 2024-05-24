@@ -11,7 +11,7 @@
 
         <h2>{{p.title}}</h2>
         <div class="article-panel">
-         <p class="first">Категория: {{p.cat.name}}</p>
+         <p class="first">Категория: {{p.cat.name}}</p>| автор: {{p.author.username|default:"неизвестен"}}</p>
          <p class="last">Дата: {{p.time_update|date:"dm-Y H:i:s"}}</p>
         </div>
         {% autoescape off %}

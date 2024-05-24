@@ -1,16 +1,14 @@
-menu = [{'title': "О сайте", 'url_name': 'about'},
-        {'title': "Добавить статью", 'url_name':
-            'add_page'},
-        {'title': "Обратная связь", 'url_name':
-            'contact'},
-        {'title': "Войти", 'url_name': 'login'}
+menu = [{'title': "Главная", 'url_name': 'home'},
+        {'title': "Новая заметка", 'url_name':'create'},
+        {'title': "Поиск заметки", 'url_name': 'find'},
+        {'title': "О сайте", 'url_name': 'about'}
         ]
 
 
 class DataMixin:
     title_page = None
     extra_context = {}
-    paginate_by = 2
+    paginate_by = 4
 
     def __init__(self):
         if self.title_page:
@@ -22,7 +20,7 @@ class DataMixin:
     def get_mixin_context(self, context, **kwargs):
         if self.title_page:
             context['title'] = self.title_page
-        context['menu'] = menu
+        #context['menu'] = menu
         context['cat_selected'] = None
         context.update(kwargs)
         return context

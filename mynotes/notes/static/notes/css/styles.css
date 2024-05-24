@@ -4,7 +4,6 @@ html, body {
 	padding: 0;
 	height: 100%;
 	width: 100%;
-	color: #444;
 }
 
 a {
@@ -91,7 +90,7 @@ ul.mainmenu {
 	margin: 0;
 	padding: 0;
 	height: 60px;
-	color: #fdc073;
+	color: #343a40;
 	font-size: 20px;
 	overflow: hidden;
 }
@@ -103,11 +102,11 @@ ul.mainmenu li.logo {margin: 0;}
 ul.mainmenu li.last {float: right;}
 
 ul.mainmenu li a {
-	color: #fdc073;
+	color: #343a40;
 	text-decoration: none;
 }
 ul.mainmenu li a:hover {
-	color: #FDA83D;
+	color: #343a40;
 }
 
 .panelitems {
@@ -138,7 +137,7 @@ ul.langitem li.descr {
 	overflow: hidden;
 }
 ul.langitem li a {
-	color: #fdc073;
+	color: #ffffff;
 	text-decoration: none;
 	font-size: 20px;
 }
@@ -302,12 +301,12 @@ ul.lang-list li {
 	display: inline-block;
 	margin-left: 40px;
 }
-ul.lang-list li.selected {color: #fdc073; border-bottom: 1px solid #fdc073;}
+ul.lang-list li.selected {color: #343a40; border-bottom: 1px solid #343a40;}
 ul.lang-list li a {
 	color: #eee;
 	text-decoration: none;
 }
-ul.lang-list li a:hover {color: #fdc073;}
+ul.lang-list li a:hover {color: #343a40;}
 
 .topic-subject .topic-line {
 	border-bottom: 1px solid #CC0000;
@@ -419,7 +418,7 @@ nav {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для эффекта объема */
 }
 
-nav a {
+nav a, span {
     color: #ffffff; /* Белый цвет текста */
     text-decoration: none; /* Удаление подчеркивания */
     margin: 0 15px; /* Отступы между ссылками */
@@ -490,24 +489,19 @@ nav.list-pages .page-num {
     padding: 20px; /* Внутренние отступы */
     border-radius: 8px; /* Сглаженные углы */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень для придания объема */
-    max-width: 300px; /* Максимальная ширина контейнера */
+}
+ul {
+    display: inline-block;
 }
 
-/* Стили для списка категорий */
-#leftchapters {
-    list-style: none; /* Убираем стандартные маркеры списка */
-    padding: 0; /* Убираем внутренние отступы */
-    margin: 0; /* Убираем внешние отступы */
-    max-width: 300px;
-}
 
 /* Стили для элементов списка */
 #leftchapters li {
     margin-bottom: 10px; /* Отступ между элементами списка */
+
 }
 
 #leftchapters li a, #leftchapters li.selected {
-    display: block; /* Блочное отображение для всего элемента */
     padding: 10px 15px; /* Внутренние отступы */
     text-decoration: none; /* Убираем подчеркивание текста */
     color: #343a40; /* Основной цвет текста */
@@ -609,4 +603,29 @@ h1 {
 .clear {
     clear: both; /* Очищаем обтекание */
 }
+
+
+/* Устанавливаем элементы списка в одну строку */
+li {
+    display: inline-block;
+    margin-right: 10px; /* Отступ между элементами */
+}
+
+/* Вложенные списки тегов */
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tags-list li {
+    display: inline-block;
+    margin-right: 10px; /* Отступ между элементами */
+}
+
+/* Выровняем текст по вертикали */
+.left-chapters {
+    vertical-align: top;
+}
+
 

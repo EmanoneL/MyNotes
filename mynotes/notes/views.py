@@ -1,6 +1,8 @@
 from datetime import datetime
 import uuid
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -53,13 +55,14 @@ menu = [{'title': "Поиск заметки", 'url_name': 'find'},
 #         form.save()
 #         return super().form_valid(form)
 
-class Create(DataMixin, CreateView):
+class Create(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddNoteForm
     template_name = 'notes/create.html'
     title_page = 'Добавление статьи'
 
     def form_valid(self, form):
-        form.save()
+        w = form.save(commit=False)
+        w.author = self.request.user
         return super().form_valid(form)
 
 
@@ -159,7 +162,7 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
 
-
+@login_required
 def about(request):
     contact_list = Notes.private.all()
     paginator = Paginator(contact_list, 3)

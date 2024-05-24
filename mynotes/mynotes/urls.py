@@ -29,6 +29,10 @@ admin.site.index_title = "Заметки"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('notes.urls')),
+    path('users/', include('users.urls', namespace="users")),
+    #path("__debug__/", include("debug_toolbar.urls")),
+
+
 ]
 
 if settings.DEBUG:

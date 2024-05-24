@@ -7,7 +7,6 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 @deconstructible
 
-
 class AddNoteForm(forms.ModelForm):
     class Meta:
         model = Notes

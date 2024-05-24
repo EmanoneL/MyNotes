@@ -1,6 +1,7 @@
 from datetime import timezone
 
 from django.contrib.admin import SimpleListFilter
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -51,18 +52,24 @@ class Notes(models.Model):
     content = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
-    is_published = models.BooleanField(choices=tuple(map(lambda x:(bool(x[0]), x[1]), Status.choices)),default=Status.PRIVATE, verbose_name="Статус")
+    is_published = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
+                                       default=Status.PRIVATE, verbose_name="Статус")
     tags = models.ManyToManyField('TagPost', blank=True, related_name='tags', verbose_name="Тэги")
-    foot_note = models.OneToOneField('FootNote', on_delete=models.SET_NULL, null=True, blank=True, related_name='note', verbose_name="Примечание")
+    foot_note = models.OneToOneField('FootNote', on_delete=models.SET_NULL, null=True, blank=True, related_name='note',
+                                     verbose_name="Примечание")
     picture = models.ImageField(upload_to="pictures/%Y/%m/%d/",
-                              default=None, blank=True, null=True,
-                              verbose_name="Изображение")
+                                default=None, blank=True, null=True,
+                                verbose_name="Изображение")
+    author = models.ForeignKey(get_user_model(),
+                               on_delete=models.SET_NULL, related_name='posts',
+                               null=True, default=None)
 
 
 class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(translit(self.name, 'ru', reversed=True))
@@ -103,6 +110,7 @@ class FootNote(models.Model):
     class Meta:
         verbose_name = 'Примечание'
         verbose_name_plural = 'Примечания'
+
     content = models.TextField(blank=True)
 
     def __str__(self):
