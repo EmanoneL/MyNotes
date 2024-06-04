@@ -11,11 +11,13 @@ urlpatterns = [
     path('find/', views.find, name='find'),
     path('login/', views.login, name='login'),
     path('about/', views.about, name='about'),
+    path('my_notes/', views.MyNotes.as_view(), name='my_notes'),
     path('post/<slug:post_slug>/', views.ShowPost.as_view(), name='post'),
     path('create/', views.Create.as_view(), name='create'),
     path('edit/<slug:slug>/', views.UpdatePage.as_view(), name='edit'),
     path('delete/<slug:slug>/', views.DeleteNote.as_view(), name='delete'),
     path('tag/<slug:tag_slug>/', views.TagPostList.as_view(), name='tag'),
+
 
 
 ]

@@ -20,28 +20,7 @@ class AddNoteForm(forms.ModelForm):
         }
         labels={'title':'Заголовок'}
 
-    # title = forms.CharField(label='Заголовок',
-    #                         widget=forms.TextInput(attrs={'class': 'form-input'}),
-    #                         validators=[
-    #                             MaxLengthValidator(255, message='Максимум 100 символов'),]
-    #
-    #                         )
-    #
-    # content = forms.CharField(widget=forms.Textarea(),
-    #                           required=False,
-    #                           label='Контент',
-    #                           validators=[
-    #                               MinLengthValidator(5, message='Минимум 5 символов')]
-    #                           )
-    # is_published = forms.BooleanField(required=False,
-    #                                   label='Статус')
-    # cat = forms.ModelChoiceField(queryset=Category.objects.all(),
-    #                              label='Категория',
-    #                              empty_label="Категория не выбрана" )
-    # foot_note = forms.ModelChoiceField(queryset=FootNote.objects.all(),
-    #                                    required=False,
-    #                                    label='Примечание',
-    #                                    empty_label="Без примечания")
+
     def clean_title(self):
         title = self.cleaned_data['title']
         ALLOWED_CHARS = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщбыъэюя0123456789- ?!.,"

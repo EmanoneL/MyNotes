@@ -1,9 +1,11 @@
 html, body {
 	font-family: 'Arial';
-	margin: 0;
+	margin: auto;
+	text-align: center;
 	padding: 0;
 	height: 100%;
 	width: 100%;
+
 }
 
 a {
@@ -60,6 +62,7 @@ ul.list-articles {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	width: 900px;
 }
 ul.list-articles li {
 	border-bottom: 1px solid #ccc;
@@ -494,6 +497,9 @@ ul {
     display: inline-block;
 }
 
+#posts div {
+      ]
+    }
 
 /* Стили для элементов списка */
 #leftchapters li {

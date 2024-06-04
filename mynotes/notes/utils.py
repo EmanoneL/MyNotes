@@ -1,6 +1,6 @@
 menu = [{'title': "Главная", 'url_name': 'home'},
         {'title': "Новая заметка", 'url_name':'create'},
-        {'title': "Поиск заметки", 'url_name': 'find'},
+        {'title': "Мои заметки", 'url_name': 'my_notes'},
         {'title': "О сайте", 'url_name': 'about'}
         ]
 

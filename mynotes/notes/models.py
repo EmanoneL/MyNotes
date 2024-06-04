@@ -17,6 +17,9 @@ class UnPublishedModel(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_published=Notes.Status.PRIVATE)
 
+class PublishedModel(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=Notes.Status.PUBLISHED)
 
 class Notes(models.Model):
     class Meta:
@@ -33,6 +36,7 @@ class Notes(models.Model):
 
     objects = models.Manager()
     private = UnPublishedModel()
+    published = PublishedModel()
 
     def save(self, *args, **kwargs):
         if not self.slug:

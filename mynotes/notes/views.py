@@ -58,7 +58,7 @@ menu = [{'title': "Поиск заметки", 'url_name': 'find'},
 class Create(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddNoteForm
     template_name = 'notes/create.html'
-    title_page = 'Добавление статьи'
+    title_page = 'Добавление заметки'
 
     def form_valid(self, form):
         w = form.save(commit=False)
@@ -66,13 +66,28 @@ class Create(LoginRequiredMixin, DataMixin, CreateView):
         return super().form_valid(form)
 
 
+class MyNotes(LoginRequiredMixin, DataMixin, ListView):
+    template_name = 'notes/my_notes.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        # Фильтруем записи по автору, который совпадает с текущим пользователем
+        return Notes.private.filter(author=self.request.user).select_related('cat').order_by('-time_update')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        # Добавляем дополнительный контекст
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_mixin_context(context, title='Мои заметки', cat_selected=0)
+        return mixin_context
+
 class NotesHome(DataMixin, ListView):
     template_name = 'notes/index.html'
     context_object_name = 'posts'
 
 
     def get_queryset(self):
-        return Notes.private.all().select_related('cat').order_by('-time_update')
+        print(Notes.published.all())
+        return Notes.published.all().select_related('cat').order_by('-time_update')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         return self.get_mixin_context(super().get_context_data(**kwargs), title='Главная страница', cat_selected=0)
@@ -84,7 +99,7 @@ class NotesCategory(DataMixin,ListView):
     allow_empty = False
 
     def get_queryset(self):
-        return Notes.private.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
+        return Notes.published.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -95,15 +110,15 @@ class NotesCategory(DataMixin,ListView):
 class TagPostList(DataMixin,ListView):
     template_name = 'notes/index.html'
     context_object_name = 'posts'
-    allow_empty = False
+    allow_empty = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         tag = TagPost.objects.get(slug=self.kwargs['tag_slug'])
-        return self.get_mixin_context(context, title='Тег' + tag.tag)
+        return self.get_mixin_context(context, title='Тег ' + tag.tag)
 
     def get_queryset(self):
-        return Notes.private.filter(tags__slug=self.kwargs['tag_slug']).select_related('cat')
+        return Notes.published.filter(tags__slug=self.kwargs['tag_slug']).select_related('cat')
 
 
 class ShowPost(DataMixin, DetailView):
@@ -116,7 +131,7 @@ class ShowPost(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=context['post'])
     def get_object(self, queryset=None):
-        return get_object_or_404(Notes.private,
+        return get_object_or_404(Notes.private.filter(author=self.request.user),
                                  slug=self.kwargs[self.slug_url_kwarg])
 
 
